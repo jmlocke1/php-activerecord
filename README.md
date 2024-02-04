@@ -10,6 +10,10 @@ by
 
 <http://www.phpactiverecord.org/> 
 
+forked by
+
+* [@jmlocke1](https://github.com/jmlocke1) - José Miguel Izquierdo
+
 ## Introducción al fork ##
 
 Durante el desarrollo de worldcode.info, he desarrollado una implementación libre de ActiveRecord, la cual es parte del desarrollo de dicho sitio, y no un proyecto en sí mismo. Cuando descubrí este proyecto comprendí que podía aprender mucho de él, al tiempo que, posiblemente, pudiera aportar mi granito de arena aportando mi propio código y actualizando el existente a las nuevas versiones de PHP 8.
