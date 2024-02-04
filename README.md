@@ -10,6 +10,11 @@ by
 
 <http://www.phpactiverecord.org/> 
 
+## Introducción al fork ##
+
+Durante el desarrollo de worldcode.info, he desarrollado una implementación libre de ActiveRecord, la cual es parte del desarrollo de dicho sitio, y no un proyecto en sí mismo. Cuando descubrí este proyecto comprendí que podía aprender mucho de él, al tiempo que, posiblemente, pudiera aportar mi granito de arena aportando mi propio código y actualizando el existente a las nuevas versiones de PHP 8.
+Dado que lo voy a adaptar a mi código, es posible que su manejo difiera mucho del original. Los que decidan clonar este proyecto para su uso propio deben tener esto en cuenta, los cambios que haga los haré para maximizar la compatibilidad con mis proyectos y mi forma de pensar y programar, si le sirve de utilidad a alguien, me daré por satisfecho.
+
 ## Introduction ##
 A brief summarization of what ActiveRecord is:
 
