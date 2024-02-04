@@ -6,11 +6,11 @@
 
 namespace ActiveRecord;
 
-require_once 'Column.php';
 
 use PDO;
 use PDOException;
 use Closure;
+use ActiveRecord\Column;
 
 /**
  * The base class for database connection adapters.
@@ -87,6 +87,8 @@ abstract class Connection
 	 * @var int
 	 */
 	static $DEFAULT_PORT = 0;
+
+	abstract public function create_column(&$column);
 
 	/**
 	 * Retrieve a database connection.
