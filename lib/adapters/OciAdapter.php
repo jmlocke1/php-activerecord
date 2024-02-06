@@ -87,7 +87,7 @@ class OciAdapter extends Connection
 		return $this->query("SELECT table_name FROM user_tables");
 	}
 
-	public function create_column(&$column)
+	public function create_column($column)
 	{
 		$column['column_name'] = strtolower($column['column_name']);
 		$column['data_type'] = strtolower(preg_replace('/\(.*?\)/','',$column['data_type']));

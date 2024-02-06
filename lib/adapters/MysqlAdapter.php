@@ -30,7 +30,7 @@ class MysqlAdapter extends Connection
 		return $this->query('SHOW TABLES');
 	}
 
-	public function create_column(&$column)
+	public function create_column($column)
 	{
 		$c = new Column();
 		$c->inflected_name	= Inflector::instance()->variablize($column['field']);

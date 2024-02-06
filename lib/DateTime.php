@@ -4,6 +4,9 @@
  */
 namespace ActiveRecord;
 
+use DateInterval;
+use DateTimeZone;
+
 /**
  * An extension of PHP's DateTime class to provide dirty flagging and easier formatting options.
  *
@@ -84,7 +87,7 @@ class DateTime extends \DateTime implements DateTimeInterface
 	 * @param string $format A format string accepted by get_format()
 	 * @return string formatted date and time string
 	 */
-	public function format($format=null)
+	public function format(string $format=null): string
 	{
 		return parent::format(self::get_format($format));
 	}
@@ -117,13 +120,13 @@ class DateTime extends \DateTime implements DateTimeInterface
 	 * This needs to be overriden so it returns an instance of this class instead of PHP's \DateTime.
 	 * See http://php.net/manual/en/datetime.createfromformat.php
 	 */
-	public static function createFromFormat($format, $time, $tz = null)
+	public static function createFromFormat(string $format, string $time, ?DateTimeZone $tz = null): DateTime
 	{
 		$phpDate = $tz ? parent::createFromFormat($format, $time, $tz) : parent::createFromFormat($format, $time);
 		if (!$phpDate)
 			return false;
 		// convert to this class using the timestamp
-		$ourDate = new static(null, $phpDate->getTimezone());
+		$ourDate = new static('now', $phpDate->getTimezone());
 		$ourDate->setTimestamp($phpDate->getTimestamp());
 		return $ourDate;
 	}
@@ -153,49 +156,49 @@ class DateTime extends \DateTime implements DateTimeInterface
 			$this->model->flag_dirty($this->attribute_name);
 	}
 
-	public function setDate($year, $month, $day)
+	public function setDate(int $year, int $month, int $day): DateTime
 	{
 		$this->flag_dirty();
 		return parent::setDate($year, $month, $day);
 	}
 
-	public function setISODate($year, $week , $day = 1)
+	public function setISODate(int $year, int $week , int $day = 1): DateTime
 	{
 		$this->flag_dirty();
 		return parent::setISODate($year, $week, $day);
 	}
 
-	public function setTime($hour, $minute, $second = 0, $microseconds = 0)
+	public function setTime(int $hour, int $minute, int $second = 0, int $microseconds = 0): DateTime
 	{
 		$this->flag_dirty();
 		return parent::setTime($hour, $minute, $second);
 	}
 
-	public function setTimestamp($unixtimestamp)
+	public function setTimestamp(int $unixtimestamp): DateTime
 	{
 		$this->flag_dirty();
 		return parent::setTimestamp($unixtimestamp);
 	}
 
-	public function setTimezone($timezone)
+	public function setTimezone(DateTimeZone $timezone): DateTime
 	{
 		$this->flag_dirty();
 		return parent::setTimezone($timezone);
 	}
 	
-	public function modify($modify)
+	public function modify(string $modify): DateTime
 	{
 		$this->flag_dirty();
 		return parent::modify($modify);
 	}
 	
-	public function add($interval)
+	public function add(DateInterval $interval): DateTime
 	{
 		$this->flag_dirty();
 		return parent::add($interval);
 	}
 
-	public function sub($interval)
+	public function sub(DateInterval $interval): DateTime
 	{
 		$this->flag_dirty();
 		return parent::sub($interval);

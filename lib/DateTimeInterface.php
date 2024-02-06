@@ -4,6 +4,8 @@
  */
 namespace ActiveRecord;
 
+use DateTimeZone;
+
 /**
  * Interface for the ActiveRecord\DateTime class so that ActiveRecord\Model->assign_attribute() will
  * know to call attribute_of() on passed values. This is so the DateTime object can flag the model
@@ -26,10 +28,10 @@ interface DateTimeInterface
 	/**
 	 * Formats the DateTime to the specified format.
 	 */
-	public function format($format=null);
+	public function format(string $format=null): string;
 
 	/**
 	 * See http://php.net/manual/en/datetime.createfromformat.php
 	 */
-	public static function createFromFormat($format, $time, $tz = null);
+	public static function createFromFormat(string $format, string $time, DateTimeZone $tz = null): DateTime;
 }
