@@ -1,5 +1,5 @@
 <?php
-
+namespace Test\helpers;
 /**
  * In order to run these unit tests, you need to install the required packages using Composer:
  *
@@ -19,12 +19,12 @@
 
 require_once 'vendor/autoload.php';
 
-require_once 'SnakeCase_PHPUnit_Framework_TestCase.php';
+// require_once 'SnakeCase_PHPUnit_Framework_TestCase.php';
 
-require_once 'DatabaseTest.php';
-require_once 'AdapterTest.php';
+// require_once 'DatabaseTest.php';
+// require_once 'AdapterTest.php';
 
-require_once __DIR__ . '/../../ActiveRecord.php';
+// require_once __DIR__ . '/../../ActiveRecord.php';
 
 // whether or not to run the slow non-crucial tests
 $GLOBALS['slow_tests'] = false;
@@ -36,7 +36,7 @@ $GLOBALS['show_warnings'] = true;
 if (getenv('LOG') !== 'false')
 	DatabaseTest::$log = true;
 
-ActiveRecord\Config::initialize(function($cfg)
+\ActiveRecord\Config::initialize(function($cfg)
 {
 	$cfg->set_model_directory(realpath(__DIR__ . '/../models'));
 	$cfg->set_connections(array(
@@ -57,7 +57,7 @@ ActiveRecord\Config::initialize(function($cfg)
 
 	if (class_exists('Log_file')) // PEAR Log installed
 	{
-		$logger = new Log_file(dirname(__FILE__) . '/../log/query.log','ident',array('mode' => 0664, 'timeFormat' =>  '%Y-%m-%d %H:%M:%S'));
+		$logger = new \Log_file(dirname(__FILE__) . '/../log/query.log','ident',array('mode' => 0664, 'timeFormat' =>  '%Y-%m-%d %H:%M:%S'));
 	
 		$cfg->set_logging(true);
 		$cfg->set_logger($logger);

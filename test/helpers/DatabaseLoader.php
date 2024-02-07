@@ -1,4 +1,5 @@
 <?php
+namespace Test\helpers;
 class DatabaseLoader
 {
 	private $db;
@@ -33,7 +34,7 @@ class DatabaseLoader
 		$after_fixtures = $this->db->protocol.'-after-fixtures';
 		try {
 			$this->exec_sql_script($after_fixtures);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			// pass
 		}
 	}
@@ -59,7 +60,7 @@ class DatabaseLoader
 			{
 				try {
 					$this->db->query("DROP SEQUENCE {$table}_seq");
-				} catch (ActiveRecord\DatabaseException $e) {
+				} catch (\ActiveRecord\DatabaseException $e) {
 					// ignore
 				}
 			}
@@ -93,7 +94,7 @@ class DatabaseLoader
 		$file = __DIR__ . "/../sql/$file.sql";
 
 		if (!file_exists($file))
-			throw new Exception("File not found: $file");
+			throw new \Exception("File not found: $file");
 
 		return file_get_contents($file);
 	}

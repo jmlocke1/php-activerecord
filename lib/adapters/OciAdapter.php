@@ -2,9 +2,14 @@
 /**
  * @package ActiveRecord
  */
-namespace ActiveRecord;
+namespace ActiveRecord\adapters;
 
 use PDO;
+use PDOException;
+use ActiveRecord\Column;
+use ActiveRecord\Inflector;
+use ActiveRecord\Connection;
+use ActiveRecord\DatabaseException;
 
 /**
  * Adapter for OCI (not completed yet).
@@ -18,7 +23,7 @@ class OciAdapter extends Connection
 
 	public $dsn_params;
 
-	protected function __construct($info)
+	protected function __construct(Object $info)
 	{
 		try {
 			$this->dsn_params = isset($info->charset) ? ";charset=$info->charset" : "";

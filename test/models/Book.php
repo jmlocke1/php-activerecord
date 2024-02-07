@@ -1,5 +1,6 @@
 <?php
-class Book extends ActiveRecord\Model
+namespace Test\models;
+class Book extends \ActiveRecord\Model
 {
 	static $belongs_to = array('author');
 	static $has_one = array();

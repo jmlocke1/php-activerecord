@@ -2,7 +2,11 @@
 /**
  * @package ActiveRecord
  */
-namespace ActiveRecord;
+namespace ActiveRecord\adapters;
+
+use ActiveRecord\Column;
+use ActiveRecord\Inflector;
+use ActiveRecord\Connection;
 
 /**
  * Adapter for Postgres (not completed yet)

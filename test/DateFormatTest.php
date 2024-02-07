@@ -1,4 +1,9 @@
 <?php
+namespace Test;
+
+use Test\models\Author;
+use ActiveRecord\DateTime;
+use Test\helpers\DatabaseTest;
 
 class DateFormatTest extends DatabaseTest
 {

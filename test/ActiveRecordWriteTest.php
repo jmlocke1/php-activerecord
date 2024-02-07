@@ -1,7 +1,12 @@
 <?php
+namespace Test;
+use Test\models\Book;
+use Test\models\Venue;
+use Test\models\Author;
 use ActiveRecord\DateTime;
+use Test\helpers\DatabaseTest;
 
-class DirtyAuthor extends ActiveRecord\Model
+class DirtyAuthor extends \ActiveRecord\Model
 {
 	static $table = 'authors';
 	static $before_save = 'before_save';
@@ -12,13 +17,13 @@ class DirtyAuthor extends ActiveRecord\Model
 	}
 };
 
-class AuthorWithoutSequence extends ActiveRecord\Model
+class AuthorWithoutSequence extends \ActiveRecord\Model
 {
 	static $table = 'authors';
 	static $sequence = 'invalid_seq';
 }
 
-class AuthorExplicitSequence extends ActiveRecord\Model
+class AuthorExplicitSequence extends \ActiveRecord\Model
 {
 	static $sequence = 'blah_seq';
 }
@@ -56,7 +61,7 @@ class ActiveRecordWriteTest extends DatabaseTest
 	public function test_insert_with_no_sequence_defined()
 	{
 		if (!$this->conn->supports_sequences())
-			throw new ActiveRecord\DatabaseException('');
+			throw new \ActiveRecord\DatabaseException('');
 
 		AuthorWithoutSequence::create(array('name' => 'Bob!'));
 	}
@@ -179,7 +184,7 @@ class ActiveRecordWriteTest extends DatabaseTest
 	public function test_save_blank_value()
 	{
 		// oracle doesn't do blanks. probably an option to enable?
-		if ($this->conn instanceof ActiveRecord\OciAdapter)
+		if ($this->conn instanceof \ActiveRecord\adapters\OciAdapter)
 			return;
 
 		$book = Book::find(1);

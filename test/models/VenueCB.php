@@ -1,5 +1,6 @@
 <?php
-class VenueCB extends ActiveRecord\Model
+namespace Test\models;
+class VenueCB extends \ActiveRecord\Model
 {
 	static $table_name = 'venues';
 	static $before_save;

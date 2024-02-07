@@ -1,5 +1,9 @@
 <?php
-require_once __DIR__ . '/../lib/adapters/SqliteAdapter.php';
+namespace Test;
+
+use ActiveRecord\Connection;
+use Test\helpers\AdapterTest;
+use ActiveRecord\DatabaseException;
 
 class SqliteAdapterTest extends AdapterTest
 {
@@ -27,10 +31,10 @@ class SqliteAdapterTest extends AdapterTest
 	{
 		try
 		{
-			ActiveRecord\Connection::instance("sqlite://" . self::InvalidDb);
+			Connection::instance("sqlite://" . self::InvalidDb);
 			$this->assertFalse(true);
 		}
-		catch (ActiveRecord\DatabaseException $e)
+		catch (DatabaseException $e)
 		{
 			$this->assertFalse(file_exists(__DIR__ . "/" . self::InvalidDb));
 		}

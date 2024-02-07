@@ -1,6 +1,8 @@
 <?php
+namespace Test;
 
-class BookExclusion extends ActiveRecord\Model
+use Test\helpers\DatabaseTest;
+class BookExclusion extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	public static $validates_exclusion_of = array(
@@ -8,7 +10,7 @@ class BookExclusion extends ActiveRecord\Model
 	);
 };
 
-class BookInclusion extends ActiveRecord\Model
+class BookInclusion extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	public static $validates_inclusion_of = array(

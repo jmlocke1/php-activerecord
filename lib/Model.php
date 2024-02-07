@@ -4,6 +4,8 @@
  */
 namespace ActiveRecord;
 
+use ActiveRecord\adapters\OciAdapter;
+
 /**
  * The base class for your models.
  *

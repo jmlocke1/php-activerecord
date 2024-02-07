@@ -1,6 +1,8 @@
 <?php
+namespace Test;
 
-class BookNumericality extends ActiveRecord\Model
+use Test\helpers\DatabaseTest;
+class BookNumericality extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 

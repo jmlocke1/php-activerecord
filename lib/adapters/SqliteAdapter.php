@@ -2,9 +2,15 @@
 /**
  * @package ActiveRecord
  */
-namespace ActiveRecord;
+namespace ActiveRecord\adapters;
 
 use PDO;
+use ActiveRecord\Utils;
+use ActiveRecord\Column;
+use ActiveRecord\Inflector;
+use ActiveRecord\Connection;
+use ActiveRecord\DatabaseException;
+use ActiveRecord\ActiveRecordException;
 
 /**
  * Adapter for SQLite.
@@ -16,7 +22,7 @@ class SqliteAdapter extends Connection
 
 	static $datetime_format = 'Y-m-d H:i:s';
 
-	protected function __construct($info)
+	protected function __construct(Object $info)
 	{
 		if (!file_exists($info->host))
 			throw new DatabaseException("Could not find sqlite db: $info->host");

@@ -1,5 +1,9 @@
 <?php
+namespace Test;
 use ActiveRecord\Cache;
+use Test\models\Author;
+use Test\models\Publisher;
+use Test\helpers\DatabaseTest;
 
 class CacheModelTest extends DatabaseTest
 {
@@ -11,12 +15,12 @@ class CacheModelTest extends DatabaseTest
 			return;
 		}
 		parent::set_up($connection_name);
-		ActiveRecord\Config::instance()->set_cache('memcache://localhost');
+		\ActiveRecord\Config::instance()->set_cache('memcache://localhost');
 	}
 
 	protected static function set_method_public($className, $methodName)
 	{
-		$class = new ReflectionClass($className);
+		$class = new \ReflectionClass($className);
 		$method = $class->getMethod($methodName);
 		$method->setAccessible(true);
 		return $method;

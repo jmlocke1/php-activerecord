@@ -1,5 +1,6 @@
 <?php
-class Amenity extends ActiveRecord\Model
+namespace Test\models;
+class Amenity extends \ActiveRecord\Model
 {
 	static $table_name = 'amenities';
 	static $primary_key = 'amenity_id';

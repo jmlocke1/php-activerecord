@@ -11,6 +11,7 @@ use PDO;
 use PDOException;
 use Closure;
 use ActiveRecord\Column;
+use ActiveRecord\DatabaseException;
 
 /**
  * The base class for database connection adapters.
@@ -87,6 +88,7 @@ abstract class Connection
 	 * @var int
 	 */
 	static $DEFAULT_PORT = 0;
+	public $dsn_params;
 
 	abstract public function create_column($column);
 
@@ -143,7 +145,7 @@ abstract class Connection
 	private static function load_adapter_class($adapter)
 	{
 		$class = ucwords($adapter) . 'Adapter';
-		$fqclass = 'ActiveRecord\\' . $class;
+		$fqclass = 'ActiveRecord\\adapters\\' . $class;
 		$source = __DIR__ . "/adapters/$class.php";
 
 		if (!file_exists($source))
@@ -242,10 +244,10 @@ abstract class Connection
 	/**
 	 * Class Connection is a singleton. Access it via instance().
 	 *
-	 * @param array $info Array containing URL parts
+	 * @param Object $info Array containing URL parts
 	 * @return Connection
 	 */
-	protected function __construct($info)
+	protected function __construct(Object $info)
 	{
 		try {
 			// unix sockets start with a /

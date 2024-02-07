@@ -1,7 +1,14 @@
 <?php
+namespace Test;
+
+use ActiveRecord\Table;
+use Test\models\VenueCB;
+use Test\helpers\DatabaseTest;
+use Test\models\VenueAfterCreate;
 
 class CallBackTest extends DatabaseTest
 {
+	public $callback;
 	public function set_up($connection_name=null)
 	{
 		parent::set_up($connection_name);
@@ -9,7 +16,7 @@ class CallBackTest extends DatabaseTest
 		// ensure VenueCB model has been loaded
 		VenueCB::find(1);
 
-		$this->callback = new ActiveRecord\CallBack('VenueCB');
+		$this->callback = new \ActiveRecord\CallBack('VenueCB');
 	}
 
 	public function assert_has_callback($callback_name, $method_name=null)
@@ -131,7 +138,7 @@ class CallBackTest extends DatabaseTest
 		$class_name = "Venues_" . md5(uniqid());
 		eval("class $class_name extends ActiveRecord\\Model { static \$table_name = 'venues'; static \$after_save = 'method_that_does_not_exist'; };");
 		new $class_name();
-		new ActiveRecord\CallBack($class_name);
+		new \ActiveRecord\CallBack($class_name);
 	}
 
 	public function test_can_register_same_multiple_times()
@@ -208,7 +215,7 @@ class CallBackTest extends DatabaseTest
 	{
 		$that = $this;
 		VenueCB::$after_create = function($model) use ($that) { $that->assert_not_null($model->id); };
-		ActiveRecord\Table::clear_cache('VenueCB');
+		Table::clear_cache('VenueCB');
 		$venue = VenueCB::find(1);
 		$venue = new VenueCB($venue->attributes());
 		$venue->id = null;
@@ -219,8 +226,8 @@ class CallBackTest extends DatabaseTest
 	public function test_before_create_returned_false_halts_execution()
 	{
 		VenueCB::$before_create = array('before_create_halt_execution');
-		ActiveRecord\Table::clear_cache('VenueCB');
-		$table = ActiveRecord\Table::load('VenueCB');
+		Table::clear_cache('VenueCB');
+		$table = Table::load('VenueCB');
 
 		$i_ran = false;
 		$i_should_have_ran = false;
@@ -234,14 +241,14 @@ class CallBackTest extends DatabaseTest
 
 		$this->assert_true($i_should_have_ran);
 		$this->assert_false($i_ran);
-		$this->assert_true(strpos(ActiveRecord\Table::load('VenueCB')->last_sql, 'INSERT') === false);
+		$this->assert_true(strpos(Table::load('VenueCB')->last_sql, 'INSERT') === false);
 	}
 
 	public function test_before_save_returned_false_halts_execution()
 	{
 		VenueCB::$before_update = array('before_update_halt_execution');
-		ActiveRecord\Table::clear_cache('VenueCB');
-		$table = ActiveRecord\Table::load('VenueCB');
+		Table::clear_cache('VenueCB');
+		$table = Table::load('VenueCB');
 
 		$i_ran = false;
 		$i_should_have_ran = false;
@@ -256,14 +263,14 @@ class CallBackTest extends DatabaseTest
 		$this->assert_true($i_should_have_ran);
 		$this->assert_false($i_ran);
 		$this->assert_false($ret);
-		$this->assert_true(strpos(ActiveRecord\Table::load('VenueCB')->last_sql, 'UPDATE') === false);
+		$this->assert_true(strpos(Table::load('VenueCB')->last_sql, 'UPDATE') === false);
 	}
 
 	public function test_before_destroy_returned_false_halts_execution()
 	{
 		VenueCB::$before_destroy = array('before_destroy_halt_execution');
-		ActiveRecord\Table::clear_cache('VenueCB');
-		$table = ActiveRecord\Table::load('VenueCB');
+		Table::clear_cache('VenueCB');
+		$table = Table::load('VenueCB');
 
 		$i_ran = false;
 		$table->callback->register('before_destroy',function($model) use (&$i_ran) { $i_ran = true; });
@@ -274,21 +281,21 @@ class CallBackTest extends DatabaseTest
 
 		$this->assert_false($i_ran);
 		$this->assert_false($ret);
-		$this->assert_true(strpos(ActiveRecord\Table::load('VenueCB')->last_sql, 'DELETE') === false);
+		$this->assert_true(strpos(Table::load('VenueCB')->last_sql, 'DELETE') === false);
 	}
 
 	public function test_before_validation_returned_false_halts_execution()
 	{
 		VenueCB::$before_validation = array('before_validation_halt_execution');
-		ActiveRecord\Table::clear_cache('VenueCB');
-		$table = ActiveRecord\Table::load('VenueCB');
+		Table::clear_cache('VenueCB');
+		$table = Table::load('VenueCB');
 
 		$v = VenueCB::find(1);
 		$v->name .= 'test';
 		$ret = $v->save();
 
 		$this->assert_false($ret);
-		$this->assert_true(strpos(ActiveRecord\Table::load('VenueCB')->last_sql, 'UPDATE') === false);
+		$this->assert_true(strpos(Table::load('VenueCB')->last_sql, 'UPDATE') === false);
 	}
 };
 ?>

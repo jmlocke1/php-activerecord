@@ -1,15 +1,20 @@
 <?php
-require_once __DIR__ . '/../lib/Serialization.php';
+namespace Test;
 
+use SimpleXMLElement;
+use Test\models\Book;
+use Test\models\Host;
+use Test\models\Author;
 use ActiveRecord\DateTime;
+use Test\helpers\DatabaseTest;
 
 class SerializationTest extends DatabaseTest
 {
 	public function tear_down()
 	{
 		parent::tear_down();
-		ActiveRecord\ArraySerializer::$include_root = false;
-		ActiveRecord\JsonSerializer::$include_root = false;
+		\ActiveRecord\ArraySerializer::$include_root = false;
+		\ActiveRecord\JsonSerializer::$include_root = false;
 	}
 
 	public function _a($options=array(), $model=null)
@@ -17,7 +22,7 @@ class SerializationTest extends DatabaseTest
 		if (!$model)
 			$model = Book::find(1);
 
-		$s = new ActiveRecord\JsonSerializer($model,$options);
+		$s = new \ActiveRecord\JsonSerializer($model,$options);
 		return $s->to_a();
 	}
 
@@ -93,7 +98,7 @@ class SerializationTest extends DatabaseTest
 	{
 		$now = new DateTime();
 		$a = $this->_a(array('only' => 'created_at'),new Author(array('created_at' => $now)));
-		$this->assert_equals($now->format(ActiveRecord\Serialization::$DATETIME_FORMAT),$a['created_at']);
+		$this->assert_equals($now->format(\ActiveRecord\Serialization::$DATETIME_FORMAT),$a['created_at']);
 	}
 
 	public function test_to_json()
@@ -105,7 +110,7 @@ class SerializationTest extends DatabaseTest
 
 	public function test_to_json_include_root()
 	{
-		ActiveRecord\JsonSerializer::$include_root = true;
+		\ActiveRecord\JsonSerializer::$include_root = true;
 		$this->assert_not_null(json_decode(Book::find(1)->to_json())->book);
 	}
 
@@ -132,7 +137,7 @@ class SerializationTest extends DatabaseTest
 
   public function test_to_array_include_root()
   {
-		ActiveRecord\ArraySerializer::$include_root = true;
+		\ActiveRecord\ArraySerializer::$include_root = true;
  		$book = Book::find(1);
 		$array = $book->to_array();
     $book_attributes = array('book' => $book->attributes());
@@ -200,15 +205,15 @@ class SerializationTest extends DatabaseTest
   public function test_to_csv_with_custom_delimiter()
   {
     $book = Book::find(1);
-    ActiveRecord\CsvSerializer::$delimiter=';';
+    \ActiveRecord\CsvSerializer::$delimiter=';';
     $this->assert_equals('1;1;2;"Ancient Art of Main Tanking";0;0',$book->to_csv());
   }
 
   public function test_to_csv_with_custom_enclosure()
   {
     $book = Book::find(1);
-    ActiveRecord\CsvSerializer::$delimiter=',';
-    ActiveRecord\CsvSerializer::$enclosure="'";
+    \ActiveRecord\CsvSerializer::$delimiter=',';
+    \ActiveRecord\CsvSerializer::$enclosure="'";
     $this->assert_equals("1,1,2,'Ancient Art of Main Tanking',0,0",$book->to_csv());
   }
 };

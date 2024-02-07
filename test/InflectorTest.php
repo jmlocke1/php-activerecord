@@ -1,11 +1,13 @@
 <?php
-require_once __DIR__ . '/../lib/Inflector.php';
-
+namespace Test;
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 class InflectorTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
+	public $inflector;
+
 	public function set_up()
 	{
-		$this->inflector = ActiveRecord\Inflector::instance();
+		$this->inflector = \ActiveRecord\Inflector::instance();
 	}
 
 	public function test_underscorify()

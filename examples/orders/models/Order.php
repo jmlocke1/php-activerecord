@@ -1,5 +1,9 @@
 <?php
-class Order extends ActiveRecord\Model
+namespace Examples\orders\models;
+
+use ActiveRecord\lib\Model;
+
+class Order extends Model
 {
 	// order belongs to a person
 	static $belongs_to = array(

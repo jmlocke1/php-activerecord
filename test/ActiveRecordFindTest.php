@@ -1,4 +1,11 @@
 <?php
+namespace Test;
+
+use Test\models\Book;
+use Test\models\Venue;
+use Test\models\Author;
+use Test\models\JoinBook;
+use Test\helpers\DatabaseTest;
 
 class ActiveRecordFindTest extends DatabaseTest
 {
@@ -31,7 +38,7 @@ class ActiveRecordFindTest extends DatabaseTest
 			Author::find(1,999999999);
 			$this->fail();
 		}
-		catch (ActiveRecord\RecordNotFound $e)
+		catch (\ActiveRecord\RecordNotFound $e)
 		{
 			$this->assert_true(strpos($e->getMessage(),'found 1, but was looking for 2') !== false);
 		}
@@ -206,7 +213,7 @@ class ActiveRecordFindTest extends DatabaseTest
 
 		foreach ($res as $author)
 		{
-			$this->assert_true($author instanceof ActiveRecord\Model);
+			$this->assert_true($author instanceof \ActiveRecord\Model);
 			$i++;
 		}
 		$this->assert_true($i > 0);
@@ -218,7 +225,7 @@ class ActiveRecordFindTest extends DatabaseTest
 
 		foreach (Author::all() as $author)
 		{
-			$this->assert_true($author instanceof ActiveRecord\Model);
+			$this->assert_true($author instanceof \ActiveRecord\Model);
 			$i++;
 		}
 		$this->assert_true($i > 0);
@@ -331,7 +338,7 @@ class ActiveRecordFindTest extends DatabaseTest
 		try {
 			$author->id;
 			$this->fail('expected ActiveRecord\UndefinedPropertyExecption');
-		} catch (ActiveRecord\UndefinedPropertyException $e) {
+		} catch (\ActiveRecord\UndefinedPropertyException $e) {
 			;
 		}
 	}
@@ -354,7 +361,7 @@ class ActiveRecordFindTest extends DatabaseTest
 	{
 		$venues = Venue::all(array('select' => 'state', 'group' => 'state'));
 		$this->assert_true(count($venues) > 0);
-		$this->assert_sql_has('GROUP BY state',ActiveRecord\Table::load('Venue')->last_sql);
+		$this->assert_sql_has('GROUP BY state',\ActiveRecord\Table::load('Venue')->last_sql);
 	}
 
 	public function test_group_with_order_and_limit_and_having()
@@ -383,7 +390,7 @@ class ActiveRecordFindTest extends DatabaseTest
 
 	public function test_having()
 	{
-		if ($this->conn instanceof ActiveRecord\OciAdapter)
+		if ($this->conn instanceof \ActiveRecord\adapters\OciAdapter)
 		{
 			$author = Author::first(array(
 				'select' => 'to_char(created_at,\'YYYY-MM-DD\') as created_at',
@@ -468,8 +475,8 @@ class ActiveRecordFindTest extends DatabaseTest
 
 	public function test_find_by_datetime()
 	{
-		$now = new DateTime();
-		$arnow = new ActiveRecord\DateTime();
+		$now = new \DateTime();
+		$arnow = new \ActiveRecord\DateTime();
 		$arnow->setTimestamp($now->getTimestamp());
 
 		Author::find(1)->update_attribute('created_at',$now);

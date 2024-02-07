@@ -1,7 +1,8 @@
 <?php
-
+namespace Test;
 use ActiveRecord\Config;
 use ActiveRecord\ConfigException;
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 
 class TestLogger
 {
@@ -21,6 +22,9 @@ class TestDateTime
 
 class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
+	public $config;
+	public $connections;
+	
 	public function set_up()
 	{
 		$this->config = new Config();
@@ -33,6 +37,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_connections_must_be_array()
 	{
+		$this->expectException(\ActiveRecord\ConfigException::class);
 		$this->config->set_connections(null);
 	}
 
@@ -92,6 +97,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_exist()
 	{
+		$this->expectException(\ActiveRecord\ConfigException::class);
 		$this->config->set_date_class('doesntexist');
 	}
 
@@ -100,6 +106,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_have_format_or_createfromformat()
 	{
+		$this->expectException(\ActiveRecord\ConfigException::class);
 		$this->config->set_date_class('TestLogger');
 	}
 
@@ -108,13 +115,14 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_have_createfromformat()
 	{
+		$this->expectException(\ActiveRecord\ConfigException::class);
 		$this->config->set_date_class('TestDateTimeWithoutCreateFromFormat');
 	}
 
 	public function test_set_date_class_with_valid_class()
 	{
-		$this->config->set_date_class('TestDateTime');
-		$this->assert_equals('TestDateTime', $this->config->get_date_class());
+		$this->config->set_date_class('DateTime');
+		$this->assert_equals('DateTime', $this->config->get_date_class());
 	}
 
 	public function test_initialize_closure()

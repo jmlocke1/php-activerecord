@@ -1,4 +1,7 @@
 <?php
+namespace Test;
+
+use Test\helpers\AdapterTest;
 require_once __DIR__ . '/../lib/adapters/OciAdapter.php';
 
 class OciAdapterTest extends AdapterTest
@@ -38,8 +41,8 @@ class OciAdapterTest extends AdapterTest
 
 	public function test_set_charset()
 	{
-		$connection_string = ActiveRecord\Config::instance()->get_connection($this->connection_name);
-		$conn = ActiveRecord\Connection::instance($connection_string . '?charset=utf8');
+		$connection_string = \ActiveRecord\Config::instance()->get_connection($this->connection_name);
+		$conn = \ActiveRecord\Connection::instance($connection_string . '?charset=utf8');
 		$this->assert_equals(';charset=utf8', $conn->dsn_params);
 	}
 }

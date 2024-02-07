@@ -1,5 +1,7 @@
 <?php
+namespace Test;
 use ActiveRecord\Column;
+use Test\helpers\AdapterTest;
 
 require_once __DIR__ . '/../lib/adapters/MysqlAdapter.php';
 
@@ -20,8 +22,8 @@ class MysqlAdapterTest extends AdapterTest
 
 	public function test_set_charset()
 	{
-		$connection_string = ActiveRecord\Config::instance()->get_connection($this->connection_name);
-		$conn = ActiveRecord\Connection::instance($connection_string . '?charset=utf8');
+		$connection_string = \ActiveRecord\Config::instance()->get_connection($this->connection_name);
+		$conn = \ActiveRecord\Connection::instance($connection_string . '?charset=utf8');
 		$this->assert_equals('SET NAMES ?',$conn->last_query);
 	}
 

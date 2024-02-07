@@ -1,5 +1,6 @@
 <?php
-class RmBldg extends ActiveRecord\Model
+namespace Test\models;
+class RmBldg extends \ActiveRecord\Model
 {
 	static $table = 'rm-bldg';
 

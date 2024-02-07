@@ -1,5 +1,6 @@
 <?php
-class Publisher extends ActiveRecord\Model
+namespace Test\models;
+class Publisher extends \ActiveRecord\Model
 {
 	static $pk = 'publisher_id';
 	static $cache = true;

@@ -1,9 +1,14 @@
 <?php
+namespace Test;
+use Test\models\Author;
 use ActiveRecord\DatabaseException;
 use ActiveRecord\DateTime as DateTime;
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 
 class DateTimeTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
+	public $date;
+	public $original_format;
 	public function set_up()
 	{
 		$this->date = new DateTime();
@@ -41,8 +46,8 @@ class DateTimeTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_should_flag_the_attribute_dirty()
 	{
-		$interval = new DateInterval('PT1S');
-		$timezone = new DateTimeZone('America/New_York');
+		$interval = new \DateInterval('PT1S');
+		$timezone = new \DateTimeZone('America/New_York');
 		$this->assert_dirtifies('setDate',2001,1,1);
 		$this->assert_dirtifies('setISODate',2001,1);
 		$this->assert_dirtifies('setTime',1,1);
@@ -170,7 +175,7 @@ class DateTimeTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_native_date_time_attribute_copies_exact_tz()
 	{
-		$dt = new \DateTime(null, new \DateTimeZone('America/New_York'));
+		$dt = new \DateTime('', new \DateTimeZone('America/New_York'));
 		$model = $this->get_model();
 
 		// Test that the data transforms without modification
@@ -184,7 +189,7 @@ class DateTimeTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_ar_date_time_attribute_copies_exact_tz()
 	{
-		$dt = new DateTime(null, new \DateTimeZone('America/New_York'));
+		$dt = new DateTime('', new \DateTimeZone('America/New_York'));
 		$model = $this->get_model();
 
 		// Test that the data transforms without modification
@@ -209,12 +214,12 @@ class DateTimeTest extends SnakeCase_PHPUnit_Framework_TestCase
 		// Assert initial state
 		$this->assert_false($model->attribute_is_dirty($model_attribute));
 
-		$cloned_datetime->add(new DateInterval('PT1S'));
+		$cloned_datetime->add(new \DateInterval('PT1S'));
 
 		// Assert that modifying the cloned object didn't flag the model
 		$this->assert_false($model->attribute_is_dirty($model_attribute));
 
-		$datetime->add(new DateInterval('PT1S'));
+		$datetime->add(new \DateInterval('PT1S'));
 
 		// Assert that modifying the model-attached object did flag the model
 		$this->assert_true($model->attribute_is_dirty($model_attribute));

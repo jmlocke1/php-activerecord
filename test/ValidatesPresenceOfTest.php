@@ -1,6 +1,8 @@
 <?php
+namespace Test;
 
-class BookPresence extends ActiveRecord\Model
+use Test\helpers\DatabaseTest;
+class BookPresence extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 
@@ -9,7 +11,7 @@ class BookPresence extends ActiveRecord\Model
 	);
 }
 
-class AuthorPresence extends ActiveRecord\Model
+class AuthorPresence extends \ActiveRecord\Model
 {
 	static $table_name = 'authors';
 

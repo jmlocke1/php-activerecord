@@ -1,8 +1,15 @@
 <?php
-require_once __DIR__ . '/../../ActiveRecord.php';
+namespace Examples;
+require_once __DIR__ . '/../../vendor/autoload.php';
+use ActiveRecord\Config;
+use function ActiveRecord\collect;
+use Examples\orders\models\Order;
+use Examples\orders\models\Person;
+
+
 
 // initialize ActiveRecord
-ActiveRecord\Config::initialize(function($cfg)
+Config::initialize(function($cfg)
 {
     $cfg->set_model_directory(__DIR__ . '/models');
     $cfg->set_connections(array('development' => 'mysql://test:test@127.0.0.1/orders_test'));
@@ -36,7 +43,7 @@ $pokemon->create_payments(array('amount' => 2.50, 'person_id' => $jax->id));
 // reload since we don't want the freebie to show up (because it failed validation)
 $tito->reload();
 
-echo "$tito->name has " . count($tito->orders) . " orders for: " . join(', ',ActiveRecord\collect($tito->orders,'item_name')) . "\n\n";
+echo "$tito->name has " . count($tito->orders) . " orders for: " . join(', ',collect($tito->orders,'item_name')) . "\n\n";
 
 // get all orders placed by Tito
 foreach (Order::find_all_by_person_id($tito->id) as $order)
@@ -63,7 +70,7 @@ $conditions = array(
 foreach (Person::all($conditions) as $person)
 {
 	$n = count($person->payments);
-	$total = array_sum(ActiveRecord\collect($person->payments,'amount'));
+	$total = array_sum(collect($person->payments,'amount'));
 	echo "$person->name made $n payments for a total of $$total\n\n";
 }
 

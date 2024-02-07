@@ -1,6 +1,8 @@
 <?php
+namespace Test;
 
-class BookFormat extends ActiveRecord\Model
+use Test\helpers\DatabaseTest;
+class BookFormat extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	static $validates_format_of = array(

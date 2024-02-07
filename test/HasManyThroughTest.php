@@ -1,8 +1,10 @@
 <?php
-include 'helpers/foo.php';
+namespace Test;
 
 use foo\bar\biz\User;
+use Test\models\Venue;
 use foo\bar\biz\Newsletter;
+use Test\helpers\DatabaseTest;
 
 class HasManyThroughTest extends DatabaseTest
 {

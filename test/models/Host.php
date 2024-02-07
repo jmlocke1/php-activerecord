@@ -1,5 +1,6 @@
 <?php
-class Host extends ActiveRecord\Model
+namespace Test\models;
+class Host extends \ActiveRecord\Model
 {
 	static $has_many = array(
 		'events',

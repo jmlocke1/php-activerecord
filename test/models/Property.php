@@ -1,5 +1,6 @@
 <?php
-class Property extends ActiveRecord\Model
+namespace Test\models;
+class Property extends \ActiveRecord\Model
 {
 	static $table_name = 'property';
 	static $primary_key = 'property_id';

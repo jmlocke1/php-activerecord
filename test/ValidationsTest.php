@@ -1,8 +1,10 @@
 <?php
-
+namespace Test;
+use Test\models\Book;
 use ActiveRecord as AR;
+use Test\helpers\DatabaseTest;
 
-class BookValidations extends ActiveRecord\Model
+class BookValidations extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 	static $alias_attribute = array('name_alias' => 'name', 'x' => 'secondary_author_id');
@@ -18,7 +20,7 @@ class BookValidations extends ActiveRecord\Model
 	}
 }
 
-class ValuestoreValidations extends ActiveRecord\Model
+class ValuestoreValidations extends \ActiveRecord\Model
 {
 	static $table_name = 'valuestore';
 	static $validates_uniqueness_of = array();

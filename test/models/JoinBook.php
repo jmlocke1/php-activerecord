@@ -1,5 +1,6 @@
 <?php
-class JoinBook extends ActiveRecord\Model
+namespace Test\models;
+class JoinBook extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 

@@ -1,5 +1,6 @@
 <?php
-class Event extends ActiveRecord\Model
+namespace Test\models;
+class Event extends \ActiveRecord\Model
 {
 	static $belongs_to = array(
 		'host',

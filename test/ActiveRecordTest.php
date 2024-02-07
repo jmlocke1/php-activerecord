@@ -1,7 +1,23 @@
 <?php
+namespace Test;
+
+
+use Test\Models\Book;
+use Test\Models\Event;
+use Test\models\Venue;
+use ActiveRecord\Table;
+use Test\models\Author;
+use Test\models\RmBldg;
+use Test\helpers\DatabaseTest;
+use Test\models\AwesomePerson;
+use Test\models\BookAttrAccessible;
+use ActiveRecord\adapters\OciAdapter;
+use ActiveRecord\UndefinedPropertyException;
 
 class ActiveRecordTest extends DatabaseTest
 {
+	public $options;
+	
 	public function set_up($connection_name=null)
 	{
 		parent::set_up($connection_name);
@@ -71,7 +87,7 @@ class ActiveRecordTest extends DatabaseTest
 		$book = Book::find(1);
 		try {
 			$book->update_attributes(array('name' => 'new name', 'invalid_attribute' => true , 'another_invalid_attribute' => 'something'));
-		} catch (ActiveRecord\UndefinedPropertyException $e) {
+		} catch (UndefinedPropertyException $e) {
 			$exceptions = explode("\r\n", $e->getMessage());
 		}
 
@@ -115,7 +131,7 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_hyphenated_column_names_to_underscore()
 	{
-		if ($this->conn instanceof ActiveRecord\OciAdapter)
+		if ($this->conn instanceof \ActiveRecord\adapters\OciAdapter)
 			return;
 
 		$keys = array_keys(RmBldg::first()->attributes());
@@ -124,7 +140,7 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_column_names_with_spaces()
 	{
-		if ($this->conn instanceof ActiveRecord\OciAdapter)
+		if ($this->conn instanceof OciAdapter)
 			return;
 
 		$keys = array_keys(RmBldg::first()->attributes());
@@ -166,11 +182,11 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_active_record_model_home_not_set()
 	{
-		$home = ActiveRecord\Config::instance()->get_model_directory();
-		ActiveRecord\Config::instance()->set_model_directory(__FILE__);
+		$home = \ActiveRecord\Config::instance()->get_model_directory();
+		\ActiveRecord\Config::instance()->set_model_directory(__FILE__);
 		$this->assert_equals(false,class_exists('TestAutoload'));
 
-		ActiveRecord\Config::instance()->set_model_directory($home);
+		\ActiveRecord\Config::instance()->set_model_directory($home);
 	}
 
 	public function test_auto_load_with_namespaced_model()
@@ -180,14 +196,14 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_namespace_gets_stripped_from_table_name()
 	{
-		$model = new NamespaceTest\Book();
+		$model = new Book();
 		$this->assert_equals('books',$model->table()->table);
 	}
 
 	public function test_namespace_gets_stripped_from_inferred_foreign_key()
 	{
-		$model = new NamespaceTest\Book();
-		$table = ActiveRecord\Table::load(get_class($model));
+		$model = new Book();
+		$table = Table::load(get_class($model));
 
 		$this->assert_equals($table->get_relationship('parent_book')->foreign_key[0], 'book_id');
 		$this->assert_equals($table->get_relationship('parent_book_2')->foreign_key[0], 'book_id');
@@ -196,8 +212,8 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_namespaced_relationship_associates_correctly()
 	{
-		$model = new NamespaceTest\Book();
-		$table = ActiveRecord\Table::load(get_class($model));
+		$model = new Book();
+		$table = Table::load(get_class($model));
 
 		$this->assert_not_null($table->get_relationship('parent_book'));
 		$this->assert_not_null($table->get_relationship('parent_book_2'));
@@ -303,7 +319,7 @@ class ActiveRecordTest extends DatabaseTest
 		try {
 			$book->save();
 			$this->fail('expected exception ActiveRecord\ReadonlyException');
-		} catch (ActiveRecord\ReadonlyException $e) {
+		} catch (\ActiveRecord\ReadonlyException $e) {
 		}
 
 		$book->name = 'some new name';
@@ -370,10 +386,10 @@ class ActiveRecordTest extends DatabaseTest
 			Author::transaction(function()
 			{
 				Author::create(array("name" => "blah"));
-				throw new Exception("blah");
+				throw new \Exception("blah");
 			});
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$exception = $e;
 		}
@@ -492,10 +508,10 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_clear_cache_for_specific_class()
 	{
-		$book_table1 = ActiveRecord\Table::load('Book');
-		$book_table2 = ActiveRecord\Table::load('Book');
-		ActiveRecord\Table::clear_cache('Book');
-		$book_table3 = ActiveRecord\Table::load('Book');
+		$book_table1 = \ActiveRecord\Table::load('Book');
+		$book_table2 = \ActiveRecord\Table::load('Book');
+		\ActiveRecord\Table::clear_cache('Book');
+		$book_table3 = \ActiveRecord\Table::load('Book');
 
 		$this->assert_true($book_table1 === $book_table2);
 		$this->assert_true($book_table1 !== $book_table3);
@@ -536,7 +552,7 @@ class ActiveRecordTest extends DatabaseTest
 
 	public function test_assigning_php_datetime_gets_converted_to_date_class_with_custom_date_class()
 	{
-		ActiveRecord\Config::instance()->set_date_class('\\DateTime'); // use PHP built-in DateTime
+		\ActiveRecord\Config::instance()->set_date_class('\\DateTime'); // use PHP built-in DateTime
 		$author = new Author();
 		$author->created_at = $now = new \DateTime();
 		$this->assert_is_a("DateTime", $author->created_at);

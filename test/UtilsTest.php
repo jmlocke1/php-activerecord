@@ -1,16 +1,20 @@
 <?php
-
+namespace Test;
 use ActiveRecord as AR;
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 
 class UtilsTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
+	public $object_array;
+	public $array_hash;
+
 	public function set_up()
 	{
 		$this->object_array = array(null,null);
-		$this->object_array[0] = new stdClass();
+		$this->object_array[0] = new \stdClass();
 		$this->object_array[0]->a = "0a";
 		$this->object_array[0]->b = "0b";
-		$this->object_array[1] = new stdClass();
+		$this->object_array[1] = new \stdClass();
 		$this->object_array[1]->a = "1a";
 		$this->object_array[1]->b = "1b";
 
@@ -98,10 +102,10 @@ class UtilsTest extends SnakeCase_PHPUnit_Framework_TestCase
 	public function test_wrap_strings_in_arrays()
 	{
 		$x = array('1',array('2'));
-		$this->assert_equals(array(array('1'),array('2')),ActiveRecord\wrap_strings_in_arrays($x));
+		$this->assert_equals(array(array('1'),array('2')),\ActiveRecord\wrap_strings_in_arrays($x));
 
 		$x = '1';
-		$this->assert_equals(array(array('1')),ActiveRecord\wrap_strings_in_arrays($x));
+		$this->assert_equals(array(array('1')),\ActiveRecord\wrap_strings_in_arrays($x));
 	}
 };
 ?>

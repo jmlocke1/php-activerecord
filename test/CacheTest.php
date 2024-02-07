@@ -1,6 +1,7 @@
 <?php
+namespace Test;
 use ActiveRecord\Cache;
-
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 class CacheTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
 	public function set_up()
@@ -49,7 +50,7 @@ class CacheTest extends SnakeCase_PHPUnit_Framework_TestCase
 	public function test_get_does_not_execute_closure_on_cache_hit()
 	{
 		$this->cache_get();
-		Cache::get("1337", function() { throw new Exception("I better not execute!"); });
+		Cache::get("1337", function() { throw new \Exception("I better not execute!"); });
 	}
 
 	public function test_cache_adapter_returns_false_on_cache_miss()

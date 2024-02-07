@@ -1,10 +1,10 @@
 <?php
-
+namespace Test;
 
 use ActiveRecord\Column;
 use ActiveRecord\DateTime;
 use ActiveRecord\DatabaseException;
-
+use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
 	public $column;
@@ -14,7 +14,7 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 	{
 		$this->column = new Column();
 		try {
-			$this->conn = ActiveRecord\ConnectionManager::get_connection(ActiveRecord\Config::instance()->get_default_connection());
+			$this->conn = \ActiveRecord\ConnectionManager::get_connection(\ActiveRecord\Config::instance()->get_default_connection());
 		} catch (DatabaseException $e) {
 			$this->mark_test_skipped('failed to connect using default connection. '.$e->getMessage());
 		}
@@ -133,7 +133,7 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_native_date_time_attribute_copies_exact_tz()
 	{
-		$dt = new \DateTime(null, new \DateTimeZone('America/New_York'));
+		$dt = new \DateTime('', new \DateTimeZone('America/New_York'));
 
 		$column = new Column();
 		$column->type = Column::DATETIME;
@@ -147,7 +147,7 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_ar_date_time_attribute_copies_exact_tz()
 	{
-		$dt = new DateTime(null, new \DateTimeZone('America/New_York'));
+		$dt = new DateTime('', new \DateTimeZone('America/New_York'));
 
 		$column = new Column();
 		$column->type = Column::DATETIME;

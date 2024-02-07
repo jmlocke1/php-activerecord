@@ -1,5 +1,8 @@
 <?php
+namespace Test;
 use ActiveRecord\Cache;
+use Test\models\Author;
+use Test\helpers\DatabaseTest;
 
 class ActiveRecordCacheTest extends DatabaseTest
 {
@@ -12,7 +15,7 @@ class ActiveRecordCacheTest extends DatabaseTest
 		}
 		
 		parent::set_up($connection_name);
-		ActiveRecord\Config::instance()->set_cache('memcache://localhost');
+		\ActiveRecord\Config::instance()->set_cache('memcache://localhost');
 	}
 
 	public function tear_down()
@@ -28,7 +31,7 @@ class ActiveRecordCacheTest extends DatabaseTest
 
 	public function test_explicit_default_expire()
 	{
-		ActiveRecord\Config::instance()->set_cache('memcache://localhost',array('expire' => 1));
+		\ActiveRecord\Config::instance()->set_cache('memcache://localhost',array('expire' => 1));
 		$this->assert_equals(1,Cache::$options['expire']);
 	}
 
@@ -36,7 +39,7 @@ class ActiveRecordCacheTest extends DatabaseTest
 	{
 		Author::first();
 
-		$table_name = Author::table()->get_fully_qualified_table_name(!($this->conn instanceof ActiveRecord\PgsqlAdapter));
+		$table_name = Author::table()->get_fully_qualified_table_name(!($this->conn instanceof \ActiveRecord\adapters\PgsqlAdapter));
 		$value = Cache::$adapter->read("get_meta_data-$table_name");
 		$this->assert_true(is_array($value));
 	}
