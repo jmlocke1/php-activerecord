@@ -1,11 +1,15 @@
 <?php
 
+
 use ActiveRecord\Column;
 use ActiveRecord\DateTime;
 use ActiveRecord\DatabaseException;
 
 class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
+	public $column;
+	public $conn;
+	
 	public function set_up()
 	{
 		$this->column = new Column();
