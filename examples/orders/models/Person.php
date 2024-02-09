@@ -1,7 +1,7 @@
 <?php
 namespace Examples\orders\models;
 
-use ActiveRecord\lib\Model;
+use ActiveRecord\Model;
 
 class Person extends Model
 {
@@ -14,4 +14,3 @@ class Person extends Model
 	static $validates_presence_of = array(
 		array('name'), array('state'));
 }
-?>

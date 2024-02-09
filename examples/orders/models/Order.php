@@ -1,7 +1,7 @@
 <?php
 namespace Examples\orders\models;
 
-use ActiveRecord\lib\Model;
+use ActiveRecord\Model;
 
 class Order extends Model
 {
@@ -38,4 +38,3 @@ class Order extends Model
 		$this->tax = $this->price * $tax;
 	}
 }
-?>

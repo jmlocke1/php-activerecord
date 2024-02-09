@@ -1,7 +1,7 @@
 <?php
 namespace Examples\orders\models;
 
-use ActiveRecord\lib\Model;
+use ActiveRecord\Model;
 class Payment extends Model
 {
 	// payment belongs to a person
@@ -9,4 +9,3 @@ class Payment extends Model
 		array('person'),
 		array('order'));
 }
-?>

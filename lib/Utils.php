@@ -117,9 +117,9 @@ function has_absolute_namespace($class_name)
  * Returns true if all values in $haystack === $needle
  * @param $needle
  * @param $haystack
- * @return unknown_type
+ * @return bool
  */
-function all($needle, array $haystack)
+function all($needle, array $haystack): bool
 {
 	foreach ($haystack as $value)
 	{
