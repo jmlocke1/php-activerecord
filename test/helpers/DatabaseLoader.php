@@ -1,5 +1,8 @@
 <?php
 namespace Test\helpers;
+
+use ActiveRecord\Exceptions\DatabaseException;
+
 class DatabaseLoader
 {
 	private $db;
@@ -60,7 +63,7 @@ class DatabaseLoader
 			{
 				try {
 					$this->db->query("DROP SEQUENCE {$table}_seq");
-				} catch (\ActiveRecord\DatabaseException $e) {
+				} catch (DatabaseException $e) {
 					// ignore
 				}
 			}

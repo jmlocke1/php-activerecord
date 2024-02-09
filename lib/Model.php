@@ -5,6 +5,11 @@
 namespace ActiveRecord;
 
 use ActiveRecord\adapters\OciAdapter;
+use ActiveRecord\Exceptions\ReadOnlyException;
+use ActiveRecord\Exceptions\ActiveRecordException;
+use ActiveRecord\Exceptions\RelationshipException;
+use ActiveRecord\Exceptions\RecordNotFoundException;
+use ActiveRecord\Exceptions\UndefinedPropertyException;
 
 /**
  * The base class for your models.
@@ -828,6 +833,7 @@ class Model
 			if (($conn = static::connection()) instanceof OciAdapter)
 			{
 				// terrible oracle makes us select the nextval first
+				// @intelephense-ignore-line
 				$attributes[$pk] = $conn->get_next_sequence_value($table->sequence);
 				$table->insert($attributes);
 				$this->attributes[$pk] = $attributes[$pk];
@@ -1555,7 +1561,7 @@ class Model
 	 * <li><b>group:</b> A SQL group by fragment</li>
 	 * </ul>
 	 *
-	 * @throws {@link RecordNotFound} if no options are passed or finding by pk and no records matched
+	 * @throws {@link RecordNotFoundException} if no options are passed or finding by pk and no records matched
 	 * @return mixed An array of records found if doing a find_all otherwise a
 	 *   single Model object or null if it wasn't found. NULL is only return when
 	 *   doing a first/last find. If doing an all find and no records matched this
@@ -1566,7 +1572,7 @@ class Model
 		$class = get_called_class();
 
 		if (func_num_args() <= 0)
-			throw new RecordNotFound("Couldn't find $class without an ID");
+			throw new RecordNotFoundException("Couldn't find $class without an ID");
 
 		$args = func_get_args();
 		$options = static::extract_and_validate_options($args);
@@ -1647,13 +1653,13 @@ class Model
 	 * @param array $values An array containing values for the pk
 	 * @param array $options An options array
 	 * @return Model
-	 * @throws {@link RecordNotFound} if a record could not be found
+	 * @throws {@link RecordNotFoundException} if a record could not be found
 	 */
 	public static function find_by_pk($values, $options)
 	{
 		if($values===null)
 		{
-			throw new RecordNotFound("Couldn't find ".get_called_class()." without an ID");
+			throw new RecordNotFoundException("Couldn't find ".get_called_class()." without an ID");
 		}
 
 		$table = static::table();
@@ -1677,10 +1683,10 @@ class Model
 
 			if ($expected == 1)
 			{
-				throw new RecordNotFound("Couldn't find $class with ID=$values");
+				throw new RecordNotFoundException("Couldn't find $class with ID=$values");
 			}
 
-			throw new RecordNotFound("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
+			throw new RecordNotFoundException("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
 		}
 		return $expected == 1 ? $list[0] : $list;
 	}

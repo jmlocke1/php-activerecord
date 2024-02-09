@@ -3,6 +3,7 @@ namespace Test\helpers;
 use ActiveRecord\Column;
 use ActiveRecord\Connection;
 use ActiveRecord\adapters\OciAdapter;
+use ActiveRecord\Exceptions\DatabaseException;
 
 class AdapterTest extends DatabaseTest
 {
@@ -52,7 +53,7 @@ class AdapterTest extends DatabaseTest
 	public function test_no_host_connection()
 	{
 		if (!$GLOBALS['slow_tests'])
-			throw new \ActiveRecord\DatabaseException("");
+			throw new DatabaseException("");
 
 		Connection::instance("{$this->conn->protocol}://user:pass");
 	}
@@ -63,7 +64,7 @@ class AdapterTest extends DatabaseTest
 	public function test_connection_failed_invalid_host()
 	{
 		if (!$GLOBALS['slow_tests'])
-			throw new \ActiveRecord\DatabaseException("");
+			throw new DatabaseException("");
 
 		Connection::instance("{$this->conn->protocol}://user:pass/1.1.1.1/db");
 	}

@@ -8,10 +8,10 @@ namespace ActiveRecord;
 
 
 use PDO;
-use PDOException;
 use Closure;
+use PDOException;
 use ActiveRecord\Column;
-use ActiveRecord\DatabaseException;
+use ActiveRecord\Exceptions\DatabaseException;
 
 /**
  * The base class for database connection adapters.

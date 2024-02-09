@@ -10,7 +10,7 @@ use Test\helpers\DatabaseTest;
 class ActiveRecordFindTest extends DatabaseTest
 {
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_find_with_no_params()
 	{
@@ -24,7 +24,7 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_find_by_pkno_results()
 	{
@@ -38,7 +38,7 @@ class ActiveRecordFindTest extends DatabaseTest
 			Author::find(1,999999999);
 			$this->fail();
 		}
-		catch (\ActiveRecord\RecordNotFound $e)
+		catch (\ActiveRecord\RecordNotFoundException $e)
 		{
 			$this->assert_true(strpos($e->getMessage(),'found 1, but was looking for 2') !== false);
 		}
@@ -67,7 +67,7 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_find_nothing_with_sql_in_string()
 	{
@@ -445,7 +445,7 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_find_by_zero()
 	{
@@ -453,7 +453,7 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_find_by_null()
 	{

@@ -9,8 +9,8 @@ use ActiveRecord\Utils;
 use ActiveRecord\Column;
 use ActiveRecord\Inflector;
 use ActiveRecord\Connection;
-use ActiveRecord\DatabaseException;
-use ActiveRecord\ActiveRecordException;
+use ActiveRecord\Exceptions\DatabaseException;
+use ActiveRecord\Exceptions\ActiveRecordException;
 
 /**
  * Adapter for SQLite.

@@ -1,5 +1,7 @@
 <?php
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
+
+use ActiveRecord\Connection;
 /**
  * Thrown when there was an error performing a database operation.
  *

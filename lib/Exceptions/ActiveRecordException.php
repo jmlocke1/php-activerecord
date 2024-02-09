@@ -1,5 +1,5 @@
 <?php
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
 
 /**
  * Generic base exception for all ActiveRecord specific errors.

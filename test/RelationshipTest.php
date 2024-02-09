@@ -13,6 +13,8 @@ use Test\models\Property;
 use Test\models\Publisher;
 use Test\helpers\DatabaseTest;
 use Test\models\AuthorAttrAccessible;
+use ActiveRecord\Exceptions\UndefinedPropertyException;
+use ActiveRecord\Exceptions\ReadOnlyException;
 
 class NotModel {};
 
@@ -188,7 +190,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$event->venue->name;
 			$this->fail('expected Exception ActiveRecord\UndefinedPropertyException');
-		} catch (\ActiveRecord\UndefinedPropertyException $e) {
+		} catch (UndefinedPropertyException $e) {
 			$this->assert_true(strpos($e->getMessage(), 'name') !== false);
 		}
 	}
@@ -202,7 +204,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$event->venue->save();
 			$this->fail('expected exception ActiveRecord\ReadonlyException');
-		} catch (\ActiveRecord\ReadonlyException $e) {
+		} catch (ReadonlyException $e) {
 		}
 
 		$event->venue->name = 'new name';
@@ -292,7 +294,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$venue->events[0]->description;
 			$this->fail('expected Exception ActiveRecord\UndefinedPropertyException');
-		} catch (\ActiveRecord\UndefinedPropertyException $e) {
+		} catch (UndefinedPropertyException $e) {
 			$this->assert_true(strpos($e->getMessage(), 'description') !== false);
 		}
 	}
@@ -306,7 +308,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$venue->events[0]->save();
 			$this->fail('expected exception ActiveRecord\ReadonlyException');
-		} catch (\ActiveRecord\ReadonlyException $e) {
+		} catch (ReadonlyException $e) {
 		}
 
 		$venue->events[0]->description = 'new desc';
@@ -464,7 +466,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$employee->position->active;
 			$this->fail('expected Exception ActiveRecord\UndefinedPropertyException');
-		} catch (\ActiveRecord\UndefinedPropertyException $e) {
+		} catch (UndefinedPropertyException $e) {
 			$this->assert_true(strpos($e->getMessage(), 'active') !== false);
 		}
 	}
@@ -500,7 +502,7 @@ class RelationshipTest extends DatabaseTest
 		try {
 			$employee->position->save();
 			$this->fail('expected exception ActiveRecord\ReadonlyException');
-		} catch (\ActiveRecord\ReadonlyException $e) {
+		} catch (ReadonlyException $e) {
 		}
 
 		$employee->position->title = 'new title';
@@ -755,7 +757,7 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
+	 * @expectedException ActiveRecord\RecordNotFoundException
 	 */
 	public function test_dont_attempt_eager_load_when_record_does_not_exist()
 	{

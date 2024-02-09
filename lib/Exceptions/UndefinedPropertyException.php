@@ -1,5 +1,5 @@
 <?php
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
 
 /**
  * Thrown when attempting to access an invalid property on a {@link Model}.

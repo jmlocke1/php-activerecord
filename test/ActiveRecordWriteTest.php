@@ -5,6 +5,7 @@ use Test\models\Venue;
 use Test\models\Author;
 use ActiveRecord\DateTime;
 use Test\helpers\DatabaseTest;
+use ActiveRecord\Exceptions\DatabaseException;
 
 class DirtyAuthor extends \ActiveRecord\Model
 {
@@ -61,7 +62,7 @@ class ActiveRecordWriteTest extends DatabaseTest
 	public function test_insert_with_no_sequence_defined()
 	{
 		if (!$this->conn->supports_sequences())
-			throw new \ActiveRecord\DatabaseException('');
+			throw new DatabaseException('');
 
 		AuthorWithoutSequence::create(array('name' => 'Bob!'));
 	}

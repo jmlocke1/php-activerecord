@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../ActiveRecord.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 // assumes a table named "books" with a pk named "id"
 // see simple.sql

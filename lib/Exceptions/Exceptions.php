@@ -2,5 +2,5 @@
 /**
  * @package ActiveRecord
  */
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
 

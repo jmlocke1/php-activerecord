@@ -1,6 +1,7 @@
 <?php
 namespace Test;
 use ActiveRecord\Connection;
+use ActiveRecord\Exceptions\DatabaseException;
 use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
 
 // Only use this to test static methods in Connection that are not specific
@@ -13,7 +14,7 @@ class ConnectionTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_connection_info_from_should_throw_exception_when_no_host()
 	{
-		$this->expectException(\ActiveRecord\DatabaseException::class);
+		$this->expectException(DatabaseException::class);
 		Connection::parse_connection_url('mysql://user:pass@');
 	}
 
@@ -39,7 +40,7 @@ class ConnectionTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_gh_103_sqlite_connection_string_absolute()
 	{
-		$this->expectException(\ActiveRecord\DatabaseException::class);
+		$this->expectException(DatabaseException::class);
 		$info = Connection::parse_connection_url('sqlite:///some/path/to/file.db');
 	}
 

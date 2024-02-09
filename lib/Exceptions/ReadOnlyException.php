@@ -1,5 +1,5 @@
 <?php
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
 
 /**
  * Thrown when attempting to perform a write operation on a {@link Model} that is in read-only mode.

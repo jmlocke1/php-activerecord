@@ -4,6 +4,7 @@
  */
 namespace ActiveRecord;
 use Closure;
+use ActiveRecord\Exceptions\ActiveRecordException;
 
 /**
  * Callbacks allow the programmer to hook into the life cycle of a {@link Model}.
@@ -149,14 +150,14 @@ class CallBack
 	 * model object. For (after|before)_(create|update) callbacks, it will merge with
 	 * a generic 'save' callback which is called first for the lease amount of precision.
 	 *
-	 * @param string $model Model to invoke the callback on.
+	 * @param Object $model Model to invoke the callback on.
 	 * @param string $name Name of the callback to invoke
 	 * @param boolean $must_exist Set to true to raise an exception if the callback does not exist.
 	 * @return mixed null if $name was not a valid callback type or false if a method was invoked
 	 * that was for a before_* callback and that method returned false. If this happens, execution
 	 * of any other callbacks after the offending callback will not occur.
 	 */
-	public function invoke($model, $name, $must_exist=true)
+	public function invoke(Object $model, string $name, bool $must_exist=true): bool
 	{
 		if ($must_exist && !array_key_exists($name, $this->registry))
 			throw new ActiveRecordException("No callbacks were defined for: $name on " . get_class($model));

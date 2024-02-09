@@ -1,6 +1,8 @@
 <?php
 namespace ActiveRecord;
 
+use ActiveRecord\Exceptions\CacheException;
+
 
 
 class Memcache

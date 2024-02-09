@@ -3,7 +3,7 @@ namespace Test;
 
 use ActiveRecord\Connection;
 use Test\helpers\AdapterTest;
-use ActiveRecord\DatabaseException;
+use ActiveRecord\Exceptions\DatabaseException;
 
 class SqliteAdapterTest extends AdapterTest
 {

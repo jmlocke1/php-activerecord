@@ -12,7 +12,8 @@ use Test\helpers\DatabaseTest;
 use Test\models\AwesomePerson;
 use Test\models\BookAttrAccessible;
 use ActiveRecord\adapters\OciAdapter;
-use ActiveRecord\UndefinedPropertyException;
+use ActiveRecord\Exceptions\UndefinedPropertyException;
+use ActiveRecord\Exceptions\ReadOnlyException;
 
 class ActiveRecordTest extends DatabaseTest
 {
@@ -319,7 +320,7 @@ class ActiveRecordTest extends DatabaseTest
 		try {
 			$book->save();
 			$this->fail('expected exception ActiveRecord\ReadonlyException');
-		} catch (\ActiveRecord\ReadonlyException $e) {
+		} catch (ReadonlyException $e) {
 		}
 
 		$book->name = 'some new name';

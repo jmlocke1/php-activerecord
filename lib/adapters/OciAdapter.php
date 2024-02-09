@@ -9,7 +9,7 @@ use PDOException;
 use ActiveRecord\Column;
 use ActiveRecord\Inflector;
 use ActiveRecord\Connection;
-use ActiveRecord\DatabaseException;
+use ActiveRecord\Exceptions\DatabaseException;
 
 /**
  * Adapter for OCI (not completed yet).

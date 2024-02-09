@@ -1,5 +1,5 @@
 <?php
-namespace ActiveRecord;
+namespace ActiveRecord\Exceptions;
 
 /**
  * Thrown for relationship exceptions.

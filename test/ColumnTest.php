@@ -3,8 +3,9 @@ namespace Test;
 
 use ActiveRecord\Column;
 use ActiveRecord\DateTime;
-use ActiveRecord\DatabaseException;
+use ActiveRecord\Exceptions\DatabaseException;
 use Test\helpers\SnakeCase_PHPUnit_Framework_TestCase;
+
 class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
 	public $column;

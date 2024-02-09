@@ -2,6 +2,8 @@
 namespace Test\helpers;
 
 use ActiveRecord\Table;
+use ActiveRecord\Exceptions\DatabaseException;
+use ActiveRecord\Exceptions\UndefinedPropertyException;
 
 class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 {
@@ -34,7 +36,7 @@ class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 		$this->connection_name = $connection_name;
 		try {
 			$this->conn = \ActiveRecord\ConnectionManager::get_connection($connection_name);
-		} catch (\ActiveRecord\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->mark_test_skipped($connection_name . ' failed to connect. '.$e->getMessage());
 		}
 
@@ -60,11 +62,11 @@ class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 		try {
 			$closure();
-		} catch (\ActiveRecord\UndefinedPropertyException $e) {
+		} catch (UndefinedPropertyException $e) {
 			$message = $e->getMessage();
 		}
 
-		$this->assertContains($contains, $message);
+		$this->assertStringContainsString($contains, $message);
 	}
 
 	/**
