@@ -2,6 +2,7 @@
 namespace Test\helpers;
 
 use ActiveRecord\Table;
+use ActiveRecord\Config;
 use ActiveRecord\Exceptions\DatabaseException;
 use ActiveRecord\Exceptions\UndefinedPropertyException;
 
@@ -18,7 +19,7 @@ class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 	{
 		Table::clear_cache();
 
-		$config = \ActiveRecord\Config::instance();
+		$config = Config::instance();
 		$this->original_default_connection = $config->get_default_connection();
 
 		$this->original_date_class = $config->get_date_class();
@@ -29,7 +30,7 @@ class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 		if ($connection_name == 'sqlite' || $config->get_default_connection() == 'sqlite')
 		{
 			// need to create the db. the adapter specifically does not create it for us.
-			static::$db = substr(\ActiveRecord\Config::instance()->get_connection('sqlite'),9);
+			static::$db = substr(Config::instance()->get_connection('sqlite'),9);
 			new \SQLite3(static::$db);
 		}
 
@@ -51,9 +52,9 @@ class DatabaseTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function tear_down()
 	{
-		\ActiveRecord\Config::instance()->set_date_class($this->original_date_class);
+		Config::instance()->set_date_class($this->original_date_class);
 		if ($this->original_default_connection)
-			\ActiveRecord\Config::instance()->set_default_connection($this->original_default_connection);
+			Config::instance()->set_default_connection($this->original_default_connection);
 	}
 
 	public function assert_exception_message_contains($contains, $closure)
